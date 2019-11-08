@@ -1,0 +1,48 @@
+
+.nar-second-box{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 60px;
+    background: #323A45;
+}
+.nar-second-inner{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    height: 100%;
+}
+.nar-second-logo{
+    width:480px;
+    height: 100%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 32px;
+    color: #bbb;
+}
+.nar-second-ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    width:60%;
+    height: 100%;
+    /*border:1px solid red;*/
+}
+.nar-second-ul li{
+    width:150px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+.nar-second-ul li a{
+    color: #bbb;
+}
+.nar-second-ul li a:hover {
+    color: #fff;
+}

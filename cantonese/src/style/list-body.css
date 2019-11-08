@@ -1,0 +1,56 @@
+.list-body{
+    margin-top:40px;
+    /* border:1px solid red;  */
+}
+.single-post-box{
+    margin:20px auto;
+    padding:10px 20px;
+    width:90%;
+    background: rgba(240, 238, 238, 0.2);
+    border-radius: 8px;
+    border-bottom: 1px solid #ebebeb;
+    /* border:1px solid red; */
+}
+.single-post-box a{
+    display: inline-block;
+    margin-bottom: 10px;
+    width:540px;
+    font-size: 18px;
+    font-weight: bold;
+    color:#483949;
+    /* border:1px solid red; */
+
+}
+.single-post-box a:hover{
+    color:#df7366;
+    cursor: pointer;
+    transition: all 0.25s linear;  /* 鼠标悬停字体颜色渐变 */
+
+}
+.single-post-box p,
+.single-post-box .collected-time{
+    margin-bottom: 5px;
+    font-size: 14px;
+    color:rgb(163, 162, 162);
+}
+
+/* 取消收藏按钮 */
+.s-post-cancel{
+    display: inline-block;
+    padding: 1px 12px;
+    line-height: 32px;
+    background: #df7366;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.5em;
+    text-decoration: none;
+    font-size: 14px;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    font-weight: 200;
+}
+
+.list-time{
+    color: rgb(163, 162, 162);
+}
