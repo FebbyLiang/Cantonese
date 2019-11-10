@@ -64,7 +64,23 @@
                     }
                 }
             },
+            initData(){
+                //     this.$request.get('', {
+                //
+                //     })
+                //         .then((response) => {
+                //             window.console.log(response);
+                //
+                //         })
+                //         .catch(function (error) {
+                //             window.console.log(error);
+                //         });
+                // }
+            }
         },
+        create(){
+            this.initData();
+        }
     }
 </script>
 

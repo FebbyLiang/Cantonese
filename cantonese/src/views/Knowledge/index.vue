@@ -4,11 +4,11 @@
         <head-brief></head-brief>
         <div class="middle">
             <div class="m-left">
-                <div class="c-f-tabs">
-                    <p >
-                        <span>粤语知识</span>
-                    </p>
-                </div>
+<!--                <div class="c-f-tabs">-->
+<!--                    <p >-->
+<!--                        <span>粤语知识</span>-->
+<!--                    </p>-->
+<!--                </div>-->
                 <div class="c-f-box">
                    <knowledge-contanier></knowledge-contanier>
                 </div>
@@ -39,13 +39,17 @@
             return {}
         },
         //存放 方法
-        methods: {},
+        methods: {
+
+        },
         components:{
             NarBar,
             headBrief,
             KnowledgeContanier,
             adFirst,
             adSecond
+        },
+        created(){
         }
 
     }

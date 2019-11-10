@@ -44,7 +44,7 @@ export default new Router({
             component:NarBar
         },
         {
-            path: '/Knowledge',
+            path: '/Knowledge/:id',
             name: 'Knowledge',
             component:Knowledge
         },
@@ -82,7 +82,7 @@ export default new Router({
             component: Submission
         },
         {
-            path: '/Article',
+            path: '/Article/:id',
             name: 'Article',
             component: Article
         },
@@ -92,7 +92,7 @@ export default new Router({
             component: BecomeEditor
         },
         {
-            path: '/SecondaryFunction',
+            path: '/SecondaryFunction/:id',
             name: 'SecondaryFunction',
             component: SecondaryFunction,
             children:[

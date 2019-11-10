@@ -1,31 +1,79 @@
 <template>
     <div id="editor">
         <div class="editor-header">
-            <input type="text" placeholder="请输入文章标题">
-            <select class="editor-header-select">
-                <option>粤语知识</option>
-                <option>粤趣</option>
-                <option>粤俗</option>
+            <input type="text" placeholder="请输入文章标题" v-model="title">
+            <select class="editor-header-select"  @change="changeProduct($event)">
+                <option v-for="(item,index) in productList" :key="index" :value='index'>{{item}}</option>
             </select>
-            <button class="editor-header-button">投稿</button>
+            <button class="editor-header-button" @click="submission();centerDialogVisible = true">投稿</button>
+            <el-dialog
+                    title="提示"
+                    :visible.sync="centerDialogVisible"
+                    width="30%"
+                    center
+                    top="25vh"
+                   >
+                <span>确定内容无误进行投稿吗？</span>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="send();centerDialogVisible = false" >确 定</el-button>
+              </span>
+            </el-dialog>
+
+
             <router-link to="/BecomeEditor" class="editor-header-editor">成为小编</router-link>
             <router-link to="" class="editor-header-cancel">退出</router-link>
         </div>
 
-        <editor></editor>
+        <editor ref="editorChild"></editor>
     </div>
 </template>
 
 <script>
+    //import http from '../request/http'
     import Editor from './Editor'
+
     export default {
         name: '',
         //存放 数据
         data: function () {
-            return {}
+            return {
+                centerDialogVisible: false,
+                title:"",
+                productList:["粤语知识","粤趣","粤俗"],
+                ProductActive:0
+            }
         },
         //存放 方法
-        methods: {},
+        methods: {
+            changeProduct(event){
+                this.ProductActive = event.target.value; //获取option对应的value值
+                window.console.log("你选中了",this.ProductActive)
+            },
+            submission(){
+                window.console.log(this.title)
+                window.console.log("你选中了",this.ProductActive)
+                window.console.log(this.$refs.editorChild.editorContent)
+                //window.console.log(this.$refs.editorChild.getContent)
+            },
+            send(){
+                let msg = {
+                    title:this.title,
+                    ProductActive:this.ProductActive,
+                    editorContent:this.$refs.editorChild.editorContent
+                }
+                this.$request.post('', {
+                    msg
+                })
+                    .then((response) => {
+                        window.console.log(response);
+
+                    })
+                    .catch(function (error) {
+                        window.console.log(error);
+                    });
+            }
+        },
         components:{
             Editor
         }
@@ -34,6 +82,14 @@
 </script>
 
 <style scoped>
+    /*.self-define {*/
+    /*    margin-top: 35vh;*/
+    /*    width: 30%;*/
+    /*    z-index: 999999;*/
+    /*}*/
+    button:hover{
+        cursor: pointer;
+    }
     .editor-header{
         width:100%;
         height: 70px;

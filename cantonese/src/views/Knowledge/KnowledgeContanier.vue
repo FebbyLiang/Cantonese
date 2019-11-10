@@ -1,6 +1,11 @@
 <template>
     <div class="contentBox">
-        <div class="s-box" v-for="(item,index) in list" :key="index">
+        <div class="c-f-tabs">
+            <p >
+                <span>粤语知识</span>
+            </p>
+        </div>
+        <div class="s-box" v-for="(item,index) in list" :key="index" @click="getIndex(index)">
             <!-- <img :src="item.imageUrl"></img> -->
             <div class="text-box">
                 <p class="title">{{item.title}}</p>
@@ -17,10 +22,12 @@
 </template>
 
 <script>
+    import http from '../../request/http'
     export default {
         name:"contentBox",
         data() {
             return {
+                type:this.$route.params.id,
                 list: [
                     {
                         imageUrl: require("../../assets/img/common/1.jpg"),
@@ -97,12 +104,60 @@
             }
         },
         //存放 方法
-        methods: {},
+        methods: {
+            initKnowledge(){
+                http.get('', {
+
+                })
+                    .then((response) => {
+                        window.console.log(response);
+
+                    })
+                    .catch(function (error) {
+                        window.console.log(error);
+                    });
+            },
+            getIndex(index){
+                window.console.log(index)
+                // this.$router.push({
+                //     name:"Article",
+                //     query:{
+                //         id:index
+                //     }
+                // })
+            }
+        },
+        watch: {
+            //动态监听路由参数变化
+            $route(){
+                this.type = this.$route.params.id;
+                window.console.log(this.type);
+            },
+        },
+        // created(){
+        //     window.console.log(this.type);
+        //     //this.initKnowledge();
+        // },
+        // updated(){
+        //     window.console.log(this.type);
+        // }
 
     }
 </script>
 
 <style scoped>
+    .c-f-tabs{
+        margin-bottom: 20px;
+    }
+    .c-f-tabs p{
+        font-size: 28px;
+        color: #409EFF;
+    }
+    .c-f-tabs span{
+        display: inline;
+        padding: 5px 0;
+        border-bottom: 2px solid #409EFF;
+    }
     .contentBox{
         width:100%;
     }

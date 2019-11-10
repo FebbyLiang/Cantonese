@@ -16,13 +16,15 @@
         <div class="register-inner">
             <p class="register-logo">Register</p>
             <div class="register-input">
-                <input type="text" v-model="account" placeholder="手机 / 邮箱" required pattern="^1(3|4|5|7|8)\d{9}$"/>
+                <input type="text" v-model="account" minlength="11" maxlength="18" placeholder="手机 / 邮箱" required pattern="^1(3|4|5|7|8)\d{9}$"/>
                 <input type="password" v-model="password" minlength="6" maxlength="15"  placeholder="请填写6到15位的密码" required >
                 <input type="password" v-model="checkPassword" minlength="6" maxlength="15" placeholder="确认密码" required/>
 
-                <input class="check-code" type="text" maxlength="4" placeholder="请输入验证码" required v-model="checkCode"/>
-                <button class="get-code" @click="getCode">点击获取</button>
-
+                <input class="check-code" type="text" maxlength="6" placeholder="请输入验证码" required v-model="checkCode"/>
+                <button class="get-code" @click="getCode(account)" :disabled="!show">
+                    <span v-show="show">点击获取</span>
+                    <span v-show="!show" class="count">{{count}} s</span>
+                </button>
                 <button class="register-submit" @click="submit()">submit</button>
             </div>
         </div>
@@ -30,6 +32,7 @@
 </template>
 
 <script>
+    import http from '../request/http'
     export default {
         name: '',
         //存放 数据
@@ -39,21 +42,79 @@
                 password:"",
                 checkPassword:"",
                 checkCode:"",
+                code:"",
+                show: true,
+                TIME_COUNT:60,
+                count: '',
+                timer: null,
             }
         },
         //存放 方法
         methods: {
-            getCode(){
-
-            },
-            submit(){
-                let msg={
-                    account:this.account,
-                    password:this.password,
-                    checkPassword:this.checkPassword,
-                    checkCode:this.checkCode
+            getCode(account){
+                window.console.log(account)
+                if (!this.timer) {
+                    this.count = 60;
+                    this.show = false;
+                    this.timer = setInterval(() => {
+                        if (this.count > 0 && this.count <= 60) {
+                            this.count--;
+                        } else {
+                            this.show = true;
+                            clearInterval(this.timer);
+                            this.timer = null;
+                        }
+                    }, 1000)
                 }
-                window.console.log(msg)
+                http.post('/auth-code', {
+                    account
+                })
+                    .then((response) => {
+                     window.console.log(response);
+                    // this.code = response.data.data;
+
+                })
+                    .catch(function (error) {
+                        window.console.log(error);
+                    });
+            },
+
+            submit() {
+                window.console.log("点击提交")
+                let account = this.account;
+                let password = this.password;
+                let checkPassword = this.checkPassword;
+                let checkCode = this.checkCode;
+                // let msg = {
+                //     account: this.account,
+                //     password: this.password,
+                //     surePassword: this.checkPassword,
+                //     checkCode: this.checkCode
+                // }
+                window.console.log(password.length)
+                if (account != "" && password == checkPassword && (password.length>=6 || password.length<=15)  &&  password != "" &&  checkCode != "") {
+                    window.console.log("关键信息获取成功");
+                    http.post('/user/register', {
+                        account: this.account,
+                        password: this.password,
+                        surePassword: this.checkPassword,
+                        checkCode: this.checkCode
+                    })
+                    .then((response) => {
+                        window.console.log(response.data);
+                        let status = response.data.statusCode;
+                        if(status == 0) {
+                            this.$router.push({name: "signIn"})
+                        }
+
+                    })
+                    .catch(function (error) {
+                        window.console.log(error);
+                    });
+                }else{
+                    alert("信息输入错误，请检查！")
+                }
+
             }
 
         },
@@ -142,6 +203,10 @@
         color: #492e72;
         border-radius: 8px;
         background: #714cac;
+        outline: none;
+    }
+    button:hover{
+        cursor: pointer;
     }
 
 </style>

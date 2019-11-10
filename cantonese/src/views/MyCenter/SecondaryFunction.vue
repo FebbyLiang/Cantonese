@@ -5,19 +5,18 @@
             <div class="mid-aside">
                 <ul class="sub-per-aside">
                     <li>
-                        <router-link to="">我关注的人</router-link>
+                        <router-link to="/SecondaryFunction/0/SecondaryContent" >我关注的人</router-link>
                     </li>
                     <li>
-                        <router-link to="">我的粉丝</router-link>
+                        <router-link to="/SecondaryFunction/1/SecondaryContent" >我的粉丝</router-link>
                     </li>
                     <li>
-                        <router-link to="">设置</router-link>
+                        <router-link to="/SecondaryFunction/2/setting" >设置</router-link>
                     </li>
                 </ul>
             </div>
             <div class="mid-box">
-<!--                <secondary-content></secondary-content>-->
-                <setting></setting>
+                <router-view></router-view>
             </div>
         </div>
     </div>
@@ -28,7 +27,7 @@
 <script>
     import NarBar from '../../components/NarBar'
     //import SecondaryContent from './SecondaryContent'
-    import setting from './setting'
+    //import setting from './setting'
     export default {
         name: 'SecondaryFunction',
         //存放 数据
@@ -40,7 +39,10 @@
         components:{
             NarBar,
             //SecondaryContent,
-            setting
+            //setting
+        },
+        updated(){
+            //window.console.log(this.$route.params.id)
         }
     }
 </script>

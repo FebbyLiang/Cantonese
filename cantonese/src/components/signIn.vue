@@ -15,25 +15,95 @@
         <div class="login-inner">
             <p class="login-logo">Login</p>
             <div class="login-input">
-                <input type="text" placeholder="账号 / 邮箱"/>
-                <input type="password" placeholder="密码"/>
-                <input class="check-code" type="text" placeholder="请输入验证码"/>
-                <button class="get-code">点击获取</button>
-                <button class="login-submit">submit</button>
+                <input type="text" placeholder="手机 / 邮箱" v-model="account" minlength="11" maxlength="18" required pattern="^1(3|4|5|7|8)\d{9}$"/>
+                <input type="password" placeholder="密码" v-model="password" minlength="6" maxlength="15" required/>
+<!--                <input class="check-code" type="text" placeholder="请输入验证码"  maxlength="6" required v-model="checkCode"/>-->
+<!--                <button class="get-code" @click="getCode(account)" :disabled="!show">-->
+<!--                    <span v-show="show">点击获取</span>-->
+<!--                    <span v-show="!show" class="count">{{count}} s</span>-->
+<!--                </button>-->
+                <button class="login-submit" @click="submit()">submit</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import http from '../request/http'
     export default {
         name: '',
         //存放 数据
         data: function () {
-            return {}
+            return {
+                account:"",
+                password:"",
+                checkCode:"",
+                code:"",
+                show: true,
+                count: '',
+                timer: null,
+            }
         },
         //存放 方法
-        methods: {},
+        methods: {
+            // getCode(account){
+            //     window.console.log(account)
+            //     if (!this.timer) {
+            //         this.count = 60;
+            //         this.show = false;
+            //         this.timer = setInterval(() => {
+            //             if (this.count > 0 && this.count <= 60) {
+            //                 this.count--;
+            //             } else {
+            //                 this.show = true;
+            //                 clearInterval(this.timer);
+            //                 this.timer = null;
+            //             }
+            //         }, 1000)
+            //     }
+            //     http.post('/auth-code', {
+            //         account
+            //     })
+            //         .then((response) => {
+            //             window.console.log(response);
+            //             // this.code = response.data.data;
+            //
+            //         })
+            //         .catch(function (error) {
+            //             window.console.log(error);
+            //         });
+            // },
+
+            submit() {
+                window.console.log("点击提交")
+                let account = this.account;
+                let password = this.password;
+                //let checkCode = this.checkCode;
+                window.console.log(password.length)
+                if (account != "" && (password.length>=6 || password.length<=15)  &&  password != "") {
+                    window.console.log("关键信息获取成功");
+                    http.post('/user/login', {
+                        account: this.account,
+                        password: this.password,
+                        //checkCode: this.checkCode
+                    })
+                        .then((response) => {
+                            window.console.log(response);
+                           // let status = response.data.statusCode;
+                            // if(status == 0) {
+                            //     window.console.log("登录成功")
+                            //     this.$router.push({name: "index"})
+                            // }
+
+                        })
+                        .catch(function (error) {
+                            window.console.log(error);
+                        });
+                }else{
+                    alert("信息输入格式错误，请检查！")
+                }
+            }
+        },
         //存放 过滤器
         filters: {},
         /*  生命周期函数  */

@@ -1,6 +1,6 @@
 <template>
     <div class="contentBox">
-        <div class="s-box" v-for="(item,index) in list" :key="index">
+        <div class="s-box" v-for="(item,index) in list" :key="index" @click="getIndex(index)">
             <img :src="item.imageUrl"/>
             <div class="sub-box">
                 <p class="title">{{item.title}}</p>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+    import http from '../../request/http'
     export default {
         name:"contentBox",
         data() {
@@ -81,7 +82,29 @@
             }
         },
         //存放 方法
-        methods: {},
+        methods: {
+            initDiscovery(){
+                http.get('', {
+
+                })
+                    .then((response) => {
+                        window.console.log(response);
+
+                    })
+                    .catch(function (error) {
+                        window.console.log(error);
+                    });
+            },
+            getIndex(index){
+                window.console.log(index)
+                this.$router.push({
+                    name:"Article",
+                    query:{
+                        id:index
+                    }
+                })
+            }
+        },
         //存放 过滤器
         filters: {},
         /*  生命周期函数  */
@@ -89,20 +112,12 @@
         beforeCreate() {
         },
         created() {
+            this.initDiscovery();
+
         },
         beforeMount() {
         },
         mounted() {
-        },
-        //运行期间
-        beforeUpdate() {
-        },
-        updated() {
-        },
-        //销毁时期
-        beforeDestroy() {
-        },
-        destroyed() {
         }
     }
 </script>

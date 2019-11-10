@@ -11,29 +11,29 @@
                         <div class="editor-uploadBox">
                             <div class="editor-upload-img">
                                 <span class="editor-upload-hint">身份证正面照</span>
-                                <img :src="avatar1?avatar1:require('../../assets/img/common/add.png')"  name="avatar">
+                                <img :src="photo1?photo1:require('../../assets/img/common/add.png')"  name="photo">
                                 <button class="editor-upload-button">点击上传</button>
-                                <input class="editor-upload-file" type="file" name="avatar" ref="avatarInput" @change="changeImageFirst($event)" accept="image/gif,image/jpeg,image/jpg,image/png">
+                                <input class="editor-upload-file" type="file" name="photo" ref="photoInput" @change="changeImageFirst($event)" accept="image/gif,image/jpeg,image/jpg,image/png">
                             </div>
                             <div class="editor-upload-img">
                                 <span class="editor-upload-hint">身份证反面照</span>
-                                <img :src="avatar2?avatar2:require('../../assets/img/common/add.png')"  name="avatar">
+                                <img :src="photo2?photo2:require('../../assets/img/common/add.png')"  name="photo">
                                 <button class="editor-upload-button">点击上传</button>
-                                <input class="editor-upload-file" type="file" name="avatar" ref="avatarInput" @change="changeImageSecond($event)" accept="image/gif,image/jpeg,image/jpg,image/png">
+                                <input class="editor-upload-file" type="file" name="photo" ref="photoInput" @change="changeImageSecond($event)" accept="image/gif,image/jpeg,image/jpg,image/png">
                             </div>
                         </div>
 
                     </li>
                     <li class="editor-view-li">
                         <span class="list-title">你的联系方式是：</span>
-                        <input type="text" placeholder="请输入你的联系方式">
+                        <input type="text" placeholder="请输入你的联系电话" maxlength="11" required pattern="^1(3|4|5|7|8)\d{9}$" v-model="phone">
                     </li>
                     <li class="editor-view-li">
                         <span class="list-title">简述想要成为小编的理由：</span>
-                        <textarea placeholder="你的理由是……"></textarea>
+                        <textarea placeholder="你的理由是……" maxlength="200" required v-model="reason"></textarea>
                     </li>
                     <li class="editor-view-li">
-                        <button class="alter">提交申请</button>
+                        <button class="alter" @click="submitApply">提交申请</button>
                     </li>
                 </ul>
             </div>
@@ -49,8 +49,11 @@
         //存放 数据
         data: function () {
             return {
-                avatar1: '',
-                avatar2: '',
+                photo1: '',
+                photo2: '',
+
+                phone:"",
+                reason:""
             }
         },
         //存放 方法
@@ -59,14 +62,14 @@
                 let file = e.target.files[0];
                 if(file) {
                     this.file = file
-                    window.console.log(this.file)
+                    //window.console.log(this.file)
                     let reader = new FileReader()
                     let that = this   //这里的that指向vue实例
                     reader.readAsDataURL(file)
                     reader.onload = function(){
                         // 在reader的load内部，this的指向是reader，所以使用自己的数据或者封装的vue方法，请使用this.vue.XXX
                         window.console.log("file对象是："+this.result)
-                        that.avatar1 = this.result
+                        that.photo1 = this.result
                     }
                 }
             },
@@ -74,17 +77,37 @@
                 let file = e.target.files[0];
                 if(file) {
                     this.file = file
-                    window.console.log(this.file)
+                    //window.console.log(this.file)
                     let reader = new FileReader()
                     let that = this   //这里的that指向vue实例
                     reader.readAsDataURL(file)
                     reader.onload = function(){
                         // 在reader的load内部，this的指向是reader，所以使用自己的数据或者封装的vue方法，请使用this.vue.XXX
                         window.console.log("file对象是："+this.result)
-                        that.avatar2 = this.result
+                        that.photo2 = this.result
                     }
                 }
             },
+            submitApply(){
+                let photoArray=[this.photo1, this.photo2]
+                let msg = {
+                    photoArray,
+                    phone: this.phone,
+                    reason: this.reason
+                }
+                window.console.log(msg)
+            //     this.$request.post('', {
+                //         msg
+                //     })
+                //         .then((response) => {
+                //             window.console.log(response);
+                //
+                //         })
+                //         .catch(function (error) {
+                //             window.console.log(error);
+                //         });
+                // }
+            }
         },
         components: {
             NarBar

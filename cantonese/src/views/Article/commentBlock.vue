@@ -3,30 +3,49 @@
         <h2>评论</h2>
         <div class="com-self-reply">
             <img src="../../assets/img/common/11.jpg">
-            <input type="text" placeholder="输入评论">
+            <input type="text" placeholder="输入评论" maxlength="100">
             <el-button type="primary" class="com-button">评论</el-button>
             <!-- <button class="com-button">评论</button> -->
         </div>
         <div class="com-container">
             <div class="single-com-box" v-for="(item,index) in commentList" :key="index">
-                <img class="s-com-userImg" :src="item.imgUrl"/>
-                <div class="s-com-box">
-                    <p class="com-nickname">{{item.nickname}}</p>
-                    <p class="com-user-content">{{item.content}}</p>
-                    <div class="com-bottom">
-                        <span>{{item.time}}</span>
-                        <div class="com-like-reply">
-                            <img src="../../assets/img/common/details04.png">
-                            <span class="com-commentNum">回复 </span>
+                <div class="outer-box">
+                    <img class="s-com-userImg" :src="item.imgUrl"/>
+                    <div class="s-com-box">
+                        <p class="com-nickname">{{item.nickname}}</p>
+                        <p class="com-user-content">{{item.content}}</p>
+                        <div class="com-bottom">
+                            <span>{{item.time}}</span>
+                            <div class="com-like-reply">
+                                <img src="../../assets/img/common/details04.png">
+                                <span class="com-commentNum">回复 </span>
+                            </div>
+                            <div class="com-like-reply" @click="changeLike(index)">
+                                <img src="../../assets/img/common/details23.png" v-if="item.likeFlag">
+                                <img src="../../assets/img/common/details02.png" v-else>
+                            </div>
                         </div>
-                        <div class="com-like-reply">
-                            <img src="../../assets/img/common/details02.png">
-                            <!-- <span class="com-commentNum">120</span>  -->
-
-                        </div>
-
                     </div>
+                </div>
 
+<!--                二级回复-->
+                <div class="nesting-box">
+                    <img class="s-com-userImg" :src="item.imgUrl"/>
+                    <div class="s-com-box">
+                        <p class="com-nickname">{{item.nickname}}</p>
+                        <p class="com-user-content">{{item.content}}</p>
+                        <div class="com-bottom">
+                            <span>{{item.time}}</span>
+                            <div class="com-like-reply">
+                                <img src="../../assets/img/common/details04.png">
+                                <span class="com-commentNum">回复 </span>
+                            </div>
+                            <div class="com-like-reply" @click="changeLike(index)">
+                                <img src="../../assets/img/common/details23.png" v-if="item.likeFlag">
+                                <img src="../../assets/img/common/details02.png" v-else>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,7 +66,7 @@
                         nickname:"小梁",
                         content:"国庆都不休息吗？优秀的人都这么优秀",
                         time:"2小时前",
-                        likeFlag:true,
+                        likeFlag:false,
 
                     },
                     {
@@ -65,7 +84,7 @@
                         nickname:"小梁",
                         content:"国庆都不休息吗？优秀的人都这么优秀",
                         time:"2小时前",
-                        likeFlag:true,
+                        likeFlag:false,
 
                     },{
                         id:"3",
@@ -80,7 +99,13 @@
             }
         },
         //存放 方法
-        methods: {},
+        methods: {
+            //修改点赞的状态
+            changeLike(index){
+                this.commentList[index].likeFlag = !this.commentList[index].likeFlag;
+                window.console.log(this.commentList[index].likeFlag)
+            }
+        },
         //存放 过滤器
         filters: {},
         /*  生命周期函数  */
@@ -163,14 +188,15 @@
     /* 评论主体 */
 
     .single-com-box{
-        display: flex;
-        flex-direction: row;
+        /*display: flex;*/
+        /*flex-direction: row;*/
         margin:10px 0;
         margin-left: 10%;
         width:90%;
-        /* border:1px solid blue; */
+         border:1px solid blue;
     }
     .single-com-box .s-com-userImg{
+        float: left;
         margin-right: 15px;
         width:35px;
         height: 35px;
@@ -178,8 +204,9 @@
         border-radius: 50%;
     }
     .s-com-box{
+        margin-left:50px;
         padding-bottom: 10px;
-        width:88%;
+        width:98%;
         font-size: 13px;
         border-bottom: 1px solid #ebebeb;
     }
@@ -187,7 +214,19 @@
         margin-bottom: 4px;
 
     }
-
+    .outer-box{
+        padding-bottom: 10px;
+        width:88%;
+        font-size: 13px;
+        border-bottom: 1px solid red;
+    }
+    .nesting-box{
+        margin-left: 50px;
+        padding-bottom: 10px;
+        width:78%;
+        font-size: 13px;
+        border-bottom: 1px solid red;
+    }
 
     .com-bottom .com-like-reply{
         float: right;

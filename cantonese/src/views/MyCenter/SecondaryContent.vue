@@ -1,5 +1,6 @@
 <template>
     <div class="content-view">
+        <h2>{{this.$route.params.id}}</h2>
         <div class="content-header">
             <h3 class="title">我的关注</h3>
             <span class="number">共7人</span>
@@ -61,7 +62,39 @@
             return {}
         },
         //存放 方法
-        methods: {},
+        methods: {
+            initContent(){
+                // window.console.log($route.params.id)
+            }
+        },
+        updated(){
+            window.console.log(this.$route.params.id);
+            if(this.$route.params.id == 0){
+                //     this.$request.get('', {
+                //
+                //     })
+                //         .then((response) => {
+                //             window.console.log(response);
+                //
+                //         })
+                //         .catch(function (error) {
+                //             window.console.log(error);
+                //         });
+                // }
+            }else if(this.$route.params.id == 1){
+                //     this.$request.get('', {
+                //
+                //     })
+                //         .then((response) => {
+                //             window.console.log(response);
+                //
+                //         })
+                //         .catch(function (error) {
+                //             window.console.log(error);
+                //         });
+                // }
+            }
+        }
     }
 </script>
 

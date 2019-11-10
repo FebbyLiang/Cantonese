@@ -3,10 +3,10 @@ import axios from 'axios'; // 引入axios
 //因为axios默认发的是json格式数据，我们要做表单提交，需要更改axios配置
 // 引入 Qs是为了把json格式，转为formdata 的数据格式
 import Qs from 'qs'
-import router from '@/router'
+import router from '../router'
 import { Message } from 'element-ui'
-const service = axios.create({
-    baseURL: '/apis',
+const request = axios.create({
+    baseURL: 'http://192.168.123.96:8080/',
     timeout: 1000,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded',"token":sessionStorage.getItem("token") },
     transformRequest: [function (data) {
@@ -17,7 +17,7 @@ const service = axios.create({
 });
 
 // 响应拦截器
-service.interceptors.response.use(response => {
+request.interceptors.response.use(response => {
     let code = response.data.code
     switch (code) {
         case 401:
@@ -57,4 +57,4 @@ service.interceptors.response.use(response => {
     }
 });
 
-export default service
+export default request

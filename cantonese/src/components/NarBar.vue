@@ -9,16 +9,16 @@
                     <router-link to="/">发现</router-link>
                 </li>
                 <li>
-                    <router-link to="/Knowledge">粤知</router-link>
+                    <router-link to="/Knowledge/0">粤知</router-link>
                     <ul class="secondary-ul">
                         <li>
-                            <router-link to="">粤语知识</router-link>
+                            <router-link to="/Knowledge/0">粤语知识</router-link>
                         </li>
                         <li>
-                            <router-link to="">粤趣</router-link>
+                            <router-link to="/Knowledge/1">粤趣</router-link>
                         </li>
                         <li>
-                            <router-link to="">粤俗</router-link>
+                            <router-link to="/Knowledge/2">粤俗</router-link>
                         </li>
                     </ul>
                 </li>
