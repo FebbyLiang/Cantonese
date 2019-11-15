@@ -10,8 +10,11 @@ import collection from './views/MyCenter/collection'
 import history from './views/MyCenter/history'
 import myPost from './views/MyCenter/myPost'
 import SecondaryFunction from './views/MyCenter/SecondaryFunction'
+import settingIndex from './views/MyCenter/setting/index'
+import perInfor from './views/MyCenter/setting/perInfor'
+import privacy from './views/MyCenter/setting/privacy'
+import safety from './views/MyCenter/setting/safety'
 import SecondaryContent from './views/MyCenter/SecondaryContent'
-import setting from './views/MyCenter/setting'
 import Submission from './views/Submission/index'
 import Editor from './views/Submission/Editor'
 import Article from './views/Article/index'
@@ -100,11 +103,28 @@ export default new Router({
                     path: 'SecondaryContent',
                     name: 'SecondaryContent',
                     component: SecondaryContent
+                }
+            ]
+        },
+        {
+            path: '/settingIndex',
+            name: 'settingIndex',
+            component: settingIndex,
+            children:[
+                {
+                    path: 'perInfor',
+                    name: 'perInfor',
+                    component: perInfor
                 },
                 {
-                    path: 'setting',
-                    name: 'setting',
-                    component: setting
+                    path: 'privacy',
+                    name: 'privacy',
+                    component: privacy
+                },
+                {
+                    path: 'safety',
+                    name: 'safety',
+                    component: safety
                 }
             ]
         }

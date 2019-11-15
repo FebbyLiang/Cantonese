@@ -17,11 +17,8 @@
             <div class="login-input">
                 <input type="text" placeholder="手机 / 邮箱" v-model="account" minlength="11" maxlength="18" required pattern="^1(3|4|5|7|8)\d{9}$"/>
                 <input type="password" placeholder="密码" v-model="password" minlength="6" maxlength="15" required/>
-<!--                <input class="check-code" type="text" placeholder="请输入验证码"  maxlength="6" required v-model="checkCode"/>-->
-<!--                <button class="get-code" @click="getCode(account)" :disabled="!show">-->
-<!--                    <span v-show="show">点击获取</span>-->
-<!--                    <span v-show="!show" class="count">{{count}} s</span>-->
-<!--                </button>-->
+                <input class="check-code" type="text" placeholder="请输入验证码"  maxlength="6" required v-model="verifyCode"/>
+                <img :src="'http://192.168.123.96:8080/file/verifyCode/'+md" class="codeImg" @click="getCodeImg">
                 <button class="login-submit" @click="submit()">submit</button>
             </div>
         </div>
@@ -29,6 +26,7 @@
 </template>
 
 <script>
+    import {uuid} from '../script/uuid.js'
     import http from '../request/http'
     export default {
         name: '',
@@ -37,63 +35,41 @@
             return {
                 account:"",
                 password:"",
-                checkCode:"",
-                code:"",
-                show: true,
-                count: '',
-                timer: null,
+                verifyCode:"",
+                md:""
+
             }
         },
         //存放 方法
         methods: {
-            // getCode(account){
-            //     window.console.log(account)
-            //     if (!this.timer) {
-            //         this.count = 60;
-            //         this.show = false;
-            //         this.timer = setInterval(() => {
-            //             if (this.count > 0 && this.count <= 60) {
-            //                 this.count--;
-            //             } else {
-            //                 this.show = true;
-            //                 clearInterval(this.timer);
-            //                 this.timer = null;
-            //             }
-            //         }, 1000)
-            //     }
-            //     http.post('/auth-code', {
-            //         account
-            //     })
-            //         .then((response) => {
-            //             window.console.log(response);
-            //             // this.code = response.data.data;
-            //
-            //         })
-            //         .catch(function (error) {
-            //             window.console.log(error);
-            //         });
-            // },
-
+            //获取图片验证码
+            getCodeImg(){
+                this.md = uuid();
+                window.console.log(this.md);
+             },
             submit() {
                 window.console.log("点击提交")
                 let account = this.account;
                 let password = this.password;
-                //let checkCode = this.checkCode;
+                let verifyCode = this.verifyCode;
+                let md = this.md;
                 window.console.log(password.length)
                 if (account != "" && (password.length>=6 || password.length<=15)  &&  password != "") {
                     window.console.log("关键信息获取成功");
                     http.post('/user/login', {
-                        account: this.account,
-                        password: this.password,
-                        //checkCode: this.checkCode
+                        account,
+                        password,
+                        verifyCode,
+                        md
                     })
                         .then((response) => {
                             window.console.log(response);
-                           // let status = response.data.statusCode;
-                            // if(status == 0) {
-                            //     window.console.log("登录成功")
-                            //     this.$router.push({name: "index"})
-                            // }
+                            localStorage.setItem("token",response.data.data);
+                            //window.console.log(localStorage.getItem("token"));
+                            if(response.status == 200) {
+                                window.console.log("登录成功")
+                                this.$router.push({name: "index"})
+                            }
 
                         })
                         .catch(function (error) {
@@ -104,27 +80,12 @@
                 }
             }
         },
-        //存放 过滤器
-        filters: {},
-        /*  生命周期函数  */
-        //创建期间
-        beforeCreate() {
-        },
+
         created() {
-        },
-        beforeMount() {
+            this.md = uuid();
+            //window.console.log(this.uuidCode);
         },
         mounted() {
-        },
-        //运行期间
-        beforeUpdate() {
-        },
-        updated() {
-        },
-        //销毁时期
-        beforeDestroy() {
-        },
-        destroyed() {
         }
     }
 </script>
@@ -167,6 +128,7 @@
         letter-spacing: .05em;
     }
     .login-inner .login-input{
+        position: relative;
         width:70%;
         /*border:1px solid red;*/
     }
@@ -187,16 +149,18 @@
         font-size: 16px;
     }
     .check-code{
-        margin-right: 20px!important;
-        width: 60%!important;
+        margin-right: 19px!important;
+        width: 50%!important;
     }
-    .get-code{
-        height: 35px;
-        outline: none;
-        border-radius: 8px;
-        border:none;
-        color: #442372;
-        background: #714cac;
+    .codeImg{
+        position: absolute;
+        top: 154px;
+        width:100px;
+        height: 56px;
+        border-radius: 7px;
+    }
+    .codeImg:hover{
+        cursor: pointer;
     }
     .login-submit{
         margin: 8px 0;

@@ -8,7 +8,7 @@ import { Message } from 'element-ui'
 const request = axios.create({
     baseURL: 'http://192.168.123.96:8080/',
     timeout: 1000,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded',"token":sessionStorage.getItem("token") },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded',"token":localStorage.getItem("token") },
     transformRequest: [function (data) {
         // 对 data 进行任意转换处理
         // data.token = sessionStorage.getItem("token")

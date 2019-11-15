@@ -32,13 +32,13 @@
                     <router-link to="/MyCenter" >我嘅中心</router-link>
                     <ul class="secondary-ul">
                         <li>
-                            <router-link to="/SecondaryFunction">我的关注</router-link>
+                            <router-link to="/SecondaryFunction/0/SecondaryContent">我的关注</router-link>
                         </li>
                         <li>
-                            <router-link to="/SecondaryFunction">我的粉丝</router-link>
+                            <router-link to="/SecondaryFunction/1/SecondaryContent">我的粉丝</router-link>
                         </li>
                         <li>
-                            <router-link to="/SecondaryFunction">设置</router-link>
+                            <router-link to="/settingIndex/perInfor">设置</router-link>
                         </li>
                         <li>
                             <router-link to="/signIn">退出</router-link>

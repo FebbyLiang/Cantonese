@@ -10,9 +10,9 @@
                     <li>
                         <router-link to="/SecondaryFunction/1/SecondaryContent" >我的粉丝</router-link>
                     </li>
-                    <li>
-                        <router-link to="/SecondaryFunction/2/setting" >设置</router-link>
-                    </li>
+<!--                    <li>-->
+<!--                        <router-link to="/SecondaryFunction/2/setting" >设置</router-link>-->
+<!--                    </li>-->
                 </ul>
             </div>
             <div class="mid-box">
@@ -83,7 +83,5 @@
     /* 对应的子路由盒子 */
     .mid-box{
         width:810px;
-        /*height: 300px;*/
-        /*border:1px solid red;*/
     }
 </style>

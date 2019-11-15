@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios'
 import './plugins/element.js'
 import "./Layout/index.css";
 import "./style/list-body.css";
+import "./style/input-style.css";
 import request from './request/http'
 
 Vue.config.productionTip = false
